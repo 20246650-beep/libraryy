@@ -8,6 +8,8 @@ builder.Services.AddControllersWithViews();
 // Repositories: one new object per web request.
 builder.Services.AddScoped<BookRepository>();
 
+builder.Services.AddScoped<MemberRepository>();
+
 // Database: read the connection string from User Secrets and create one shared data source.
 var connectionString = builder.Configuration.GetConnectionString("Library");
 if (string.IsNullOrWhiteSpace(connectionString))
