@@ -1,7 +1,23 @@
+using library.Data;
+using Npgsql;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Repositories: one new object per web request.
+builder.Services.AddScoped<BookRepository>();
+
+builder.Services.AddScoped<MemberRepository>();
+
+// Database: read the connection string from User Secrets and create one shared data source.
+var connectionString = builder.Configuration.GetConnectionString("Library");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'Library' is missing. Add it in Manage User Secrets.");
+}
+var dataSource = NpgsqlDataSource.Create(connectionString);
+builder.Services.AddSingleton(dataSource);
 
 var app = builder.Build();
 
