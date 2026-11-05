@@ -10,6 +10,8 @@ builder.Services.AddScoped<BookRepository>();
 
 builder.Services.AddScoped<MemberRepository>();
 
+builder.Services.AddScoped<LoanRepository>();
+
 builder.Services.AddScoped<NoteRepository>();
 
 // Database: read the connection string from User Secrets and create one shared data source.
