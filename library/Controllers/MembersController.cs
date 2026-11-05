@@ -27,7 +27,7 @@ public class MembersController : Controller
         return View(new Member());
     }
 
-    // POST /Members/Create
+    // POST /Members/Create : the form was submitted.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Member member)
@@ -37,7 +37,16 @@ public class MembersController : Controller
             return View(member);
         }
 
-        await _members.AddAsync(member);
+        try
+        {
+            await _members.AddAsync(member);
+        }
+        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation)
+        {
+            ModelState.AddModelError("Email", "Another member already uses this email.");
+            return View(member);
+        }
+
         return RedirectToAction(nameof(Index));
     }
 
