@@ -24,6 +24,7 @@
                     <th class="py-3">Full Name</th>
                     <th class="py-3">Email</th>
                     <th class="py-3">Type</th>
+                    <th class="text-end">Books out</th>
                     <th class="py-3 pe-4 text-end" style="width:12rem">Actions</th>
                 </tr>
             </thead>
@@ -37,12 +38,14 @@
                         <td>
                             @{
                                 var badgeStyle = member.MemberType switch
+
                                 {
                                     "Faculty" => "bg-danger",
                                     "Student" => "bg-success",
                                     _ => "bg-info text-dark"
                                 };
                             }
+                            <td class="text-end">@member.OpenLoans</td>
                             <span class="badge @badgeStyle rounded-pill px-3 py-2">@member.MemberType</span>
                         </td>
                         <td class="text-end pe-4">
